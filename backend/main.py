@@ -19,6 +19,26 @@ db.create_all()
 myspoof = Spoof()
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
+from sqlalchemy.ext.declarative import DeclarativeMeta
+
+class AlchemyEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj.__class__, DeclarativeMeta):
+            # an SQLAlchemy class
+            fields = {}
+            for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+                data = obj.__getattribute__(field)
+                try:
+                    json.dumps(data) # this will fail on non-encodable values, like other classes
+                    fields[field] = data
+                except TypeError:
+                    fields[field] = None
+            # a json-encodable dict
+            return fields
+
+        return json.JSONEncoder.default(self, obj)
+
 @app.route('/')
 def upload():
     return ("hello world")
@@ -62,10 +82,10 @@ def challenges_update(user_id, challenge_id, status):
             return("u entered same user twice")
     return ("something went wrong")
 
-@app.route('/challenges/get/<challenge_id>')
-def get_challenges(challenge_id):
-    chal = model.Challenge.query.filter_by(cid=challenge_id).first_or_404()
-    return (f'{chal.name},{chal.points},{chal.availability}')
+@app.route('/challenges/get/')
+def get_challenges():
+    chal = model.Challenge.query.with_entities(model.Challenge.cid, model.Challenge.name, model.Challenge.points)
+    return jsonify(json_list = chal.all())
 
 @app.route('/prizes/all', methods=['GET'])
 def get_all_prizes():
