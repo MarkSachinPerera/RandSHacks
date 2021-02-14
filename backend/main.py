@@ -123,4 +123,4 @@ def get_user_friends():
 
 ########################################################################
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=80)
