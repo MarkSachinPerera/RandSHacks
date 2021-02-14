@@ -18,11 +18,9 @@ db = SQLAlchemy(app)
 def upload():
     return ("hello world")
 
-@app.route('/status', methods=['GET'])
-def get_status_update():
-
-    data = spoof.get_status()
-    return ( jsonify({'Status' : data}) )
+@app.route('/feed', methods=['GET'])
+def get_feed_update():
+    return ( jsonify({'Feed' : spoof.get_status()}) )
 
 @app.route('/leaderboard', methods=['GET'])
 def get_leaderboard():
