@@ -4,8 +4,8 @@ from requests.api import post
 from flask import Flask, render_template, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-# small test case server with data set to see if the front end can
-# successfully recieve data and display that data
+import spoof
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -14,19 +14,19 @@ db = SQLAlchemy(app)
 
 
 
-data = []
 
 
 @app.route('/')
 def upload():
     return ("hello world")
 
-@app.route('/status')
+@app.route('/status', methods=['GET'])
 def status_update():
-    status_update = spoof.get_status()
-    return(jsonify(status_update))
+
+    data = spoof.get_status()
+    return ( jsonify({'Status' : data}) )
 
 
 
-def upload():
-    return ("hello world")
+if __name__ == '__main__':
+    app.run(debug=True)

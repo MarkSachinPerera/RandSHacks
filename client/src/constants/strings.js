@@ -1,8 +1,8 @@
 //BASEURL
-const SERVER_BASE_URL = 'http://localhost:5433';
+const SERVER_BASE_URL = 'http://127.0.0.1:5000/';
 
 //Local storage keys
-
+const userKey = 'user';
 //Front and Backend common routes
 
 //Routes Front End
@@ -12,4 +12,4 @@ const registerRoute = '/register';
 
 //Routes Back End
 
-export { SERVER_BASE_URL, homeRoute, loginRoute, registerRoute };
+export { SERVER_BASE_URL, homeRoute, loginRoute, registerRoute, userKey };
