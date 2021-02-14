@@ -13,10 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 CORS(app)
 # Init Database
 db = SQLAlchemy(app)
-from models import challenge, user, task, friends, prizes, competes
+from models import model
 db.create_all()
-from models.user import Users
-from models.competes import competes
 
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -51,14 +49,14 @@ def challenges_update(user_id, challenge_id, status):
 
     if status == "start":
         try:
-            new = competes(uid=user_id, cid=challenge_id)
+            new = model.competes(uid=user_id, cid=challenge_id)
             db.session.add(new)
             db.session.commit()
             return ("success")
         except exc.IntegrityError as e:
             return("u entered same user twice")
     if status == "done":
-        q = competes.query.filter_by(uid=user_id).first_or_404()
+        q = model.competes.query.filter_by(uid=user_id).first_or_404()
         if q.cid == int( challenge_id):
             return ("Challenge done, mark TODO delete it")
     return ("something went wrong")
