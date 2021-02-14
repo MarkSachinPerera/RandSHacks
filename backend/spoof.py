@@ -13,6 +13,7 @@ class Spoof():
     }
     friendlist = [4,6,8]
     leaderboard = []
+    theprizelist= []
     # returns json data of 5 random people + status updates
     def get_status(self):
         fake = Faker()
@@ -78,7 +79,8 @@ class Spoof():
         return(data)    
 
     def create_prizes(self):
-
+        if self.theprizelist:
+            return self.theprizelist
         word_list = [
             "Computer",
             "Shoes - Yeezys",
@@ -98,6 +100,7 @@ class Spoof():
                 'pid' : i + 1
             } 
         
+        self.theprizelist = data
         return(data)
 
     def get_user_name(self):
@@ -111,4 +114,4 @@ class Spoof():
 
 if __name__ == "__main__":
     # create_people()
-    print(get_leaderboard())
+    pass
