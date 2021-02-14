@@ -1,4 +1,6 @@
 # @return Array<Challenges>
+
+    
 def getAllChallenges(userId):
     pass
 
