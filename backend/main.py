@@ -52,15 +52,13 @@ def post_register(name, password, email):
 @app.route('/challenges/update/<user_id>,<challenge_id>,<status>', methods=['GET'])
 def challenges_update(user_id, challenge_id, status):
 
-    if status == "start":
-        try:
-            new = model.Competes(uid=user_id, cid=challenge_id)
-            db.session.add(new)
-            db.session.commit()
-            return ("success")
-        except exc.IntegrityError as e:
-            return("u entered same user twice")
-    return ("something went wrong")
+    if myspoof.userInfo['challenge'] == -1 and status == "start":
+        myspoof.userInfo['challenge'] = challenge_id
+        return redirect('/')
+    elif myspoof.userInfo['challenge'] > 0 and status == "done":
+        myspoof.userInfo['challenge'] = -1
+        return redirect('/')
+    return('no')
 
 @app.route('/challenges/get/<challenge_id>')
 def get_challenges(challenge_id):
@@ -75,20 +73,12 @@ def get_all_prizes():
 
     return (jsonify ( { 'Prizes' :  prizeList} ) )
 
-
-@app.route('/challenges/current/<user_id>', methods=['GET'])
+@app.route('/challenges/current', methods=['GET'])
 def challenges_current(user_id):
-    q = model.Competes.query.filter_by(uid=user_id).first_or_404()
 
-    data = {}
-
-    if isinstance(q, Iterable): 
-        for i in q:
-            data[int(user_id)] = i.cid
-    else:
-        data = { int(q.uid) : int(q.cid)}
-
-    return ( jsonify( { 'Current' : data}))
+    if myspoof.userInfo['challenge'] > 0:
+        return ( jsonify( { 'Current' : myspoof.userInfo['challenge']}))
+    return ('no')
 
 ###################Full user functions ########################
 
@@ -114,7 +104,7 @@ def get_user_score():
     # user = model.Users.query.filter_by(name=name).first_or_404()
     # return user.name
 
-    return ( jsonify ( {'Score' : myspoof.get_user_score()} ) )
+    return ( jsonify ( {'Score' : myspoof.userInfo['score']} ) )
 
 @app.route('/user/friends')
 def get_user_friends():

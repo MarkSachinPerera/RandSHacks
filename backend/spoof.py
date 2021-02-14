@@ -8,7 +8,8 @@ class Spoof():
         'name' : "",
         'password' : "",
         'email' : "",
-        'score' : "",
+        'score' : 0,
+        'challenge': -1
 
     }
     friendlist = [4,6,8]
@@ -93,9 +94,9 @@ class Spoof():
 
         data = {}
 
-        for i in range(15):
+        for i in range(7):
             data[i+1] = {
-                'name' : word_list[random.randint(0,6)], 
+                'name' : word_list[i], 
                 'points' : random.randint(10,(i+1)*100) * 10,
                 'pid' : i + 1
             } 
