@@ -44,7 +44,8 @@ def get_leaderboard():
     data = {}
 
     for i in range(0,10):
-        data[i+1] = { 'name' : names[i], 'score' : points[i]}
+        data[i+1] = { 'name' : names[i], 
+        'score' : points[i], 'imgurl' : 'https://gist.github.com/tuur29/2daf51872917b6143f439c01f922364b'}
 
     return(data)    
 
