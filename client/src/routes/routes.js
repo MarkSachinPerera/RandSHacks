@@ -10,6 +10,7 @@ export default function Routes() {
   return (
     <Switch>
       <ProtectedRoute
+        allowRender={true}
         exact
         path={homeRoute}
         component={(props) => <Home {...props} isAuthenticated={Authservice.isAuthenticated()} />}
