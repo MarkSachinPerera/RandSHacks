@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import AuthService from '../../services/AuthService';
-import { homeRoute, leaderboardRoute } from '../../constants/strings';
+import { homeRoute, leaderboardRoute, prizesRoute } from '../../constants/strings';
 
 export default class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: 'Current Challenges',
-      isAuthenticated: AuthService.isAuthenticated(),
-      authString: AuthService.isAuthenticated() ? 'Logout' : 'Login',
     };
   }
 
@@ -22,7 +20,9 @@ export default class NavBar extends Component {
       case 'Current Challenges':
         this.props.history.push(homeRoute);
         break;
-
+      case 'Prizes':
+        this.props.history.push(prizesRoute);
+        break;
       default:
         break;
     }
@@ -33,7 +33,8 @@ export default class NavBar extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu pointing secondary>
+      <Menu pointing secondary color="blue" inverted>
+        <Menu.Item name="Friendfy" />
         <Menu.Item
           name="Current Challenges"
           active={activeItem === 'Current Challenges'}
@@ -46,13 +47,9 @@ export default class NavBar extends Component {
         />
         <Menu.Item name="Prizes" active={activeItem === 'Prizes'} onClick={this.handleItemClick} />
         <Menu.Menu position="right">
-          <Menu.Item
-            name={this.state.authString}
-            active={activeItem === this.handleItemClick}
-            onClick={() => {
-              AuthService.authRouteHandler(this.props.history);
-            }}
-          />
+          <Menu.Item>
+            <b>Score: {this.props.score} points</b>
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
     );

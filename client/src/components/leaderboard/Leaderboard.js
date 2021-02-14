@@ -47,8 +47,10 @@ export default class Leaderboard extends React.Component {
 
     return (
       <Container textAlign="center">
-        <Header as="h1">Leaderboard</Header>
-        <Table celled structured style={{ margin: '10px' }}>
+        <Header as="h1" color="blue" style={{ margin: '1em' }}>
+          Leaderboard
+        </Header>
+        <Table style={{ margin: '10px' }} basic="very">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>User</Table.HeaderCell>
