@@ -34,6 +34,7 @@ export default class NavBar extends Component {
 
     return (
       <Menu pointing secondary color="blue" inverted>
+        <Menu.Item name="Friendfy" />
         <Menu.Item
           name="Current Challenges"
           active={activeItem === 'Current Challenges'}
