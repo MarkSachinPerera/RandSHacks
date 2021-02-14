@@ -33,6 +33,18 @@ def get_leaderboard():
 
     names = []
     points = []
+    imageurl = [
+        'https://semantic-ui.com/images/avatar/small/ade.jpg',
+        'https://semantic-ui.com/images/avatar/small/chris.jpg',
+        'https://semantic-ui.com/images/avatar/small/christian.jpg',
+        'https://semantic-ui.com/images/avatar/small/daniel.jpg',
+        'https://semantic-ui.com/images/avatar/small/elliot.jpg',
+        'https://semantic-ui.com/images/avatar/small/helen.jpg',
+        'https://semantic-ui.com/images/avatar/small/jenny.jpg',
+        'https://semantic-ui.com/images/avatar/small/daniel.jpg',
+        'https://semantic-ui.com/images/avatar/small/elliot.jpg',
+        'https://semantic-ui.com/images/avatar/small/helen.jpg'
+    ]
 
     for i in range(10):
         names.append(fake.name())
@@ -44,7 +56,8 @@ def get_leaderboard():
     data = {}
 
     for i in range(0,10):
-        data[i+1] = { 'name' : names[i], 'score' : points[i]}
+        data[i+1] = { 'name' : names[i], 
+        'score' : points[i], 'imgurl' : imageurl[i]}
 
     return(data)    
 
