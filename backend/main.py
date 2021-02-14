@@ -73,13 +73,10 @@ def challenges_current(user_id):
     if isinstance(q, Iterable): 
         for i in q:
             data[int(user_id)] = i.cid
-            print("dslfka")
     else:
         data = { int(q.uid) : int(q.cid)}
-        print("data")
 
-    # print(data)
-    return ( jsonify( data))
+    return ( jsonify( { 'Current' : data}))
 
 ###################Example of get request
 @app.route('/user/<name>')
