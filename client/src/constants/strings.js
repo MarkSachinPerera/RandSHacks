@@ -10,6 +10,7 @@ const homeRoute = '/';
 const loginRoute = '/login';
 const registerRoute = '/register';
 const leaderboardRoute = '/leaderboard';
+const prizesRoute = '/prizes';
 
 //Routes Back End
 const leaderboardSRoute = '/leaderboard';
@@ -22,4 +23,5 @@ export {
   userKey,
   leaderboardRoute,
   leaderboardSRoute,
+  prizesRoute,
 };
