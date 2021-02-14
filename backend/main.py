@@ -5,14 +5,14 @@ from flask import Flask, render_template, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import spoof
-
-
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 # Init Database
 db = SQLAlchemy(app)
-
+CORS(app)
+# app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def upload():
