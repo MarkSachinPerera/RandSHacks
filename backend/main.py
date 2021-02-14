@@ -58,9 +58,15 @@ def challenges_update(user_id, challenge_id, status):
             return("u entered same user twice")
     return ("something went wrong")
 
+@app.route('/challenges/get/<challenge_id>')
+def get_challenges(challenge_id):
+    chal = model.Challenge.query.filter_by(cid=challenge_id).first_or_404()
+    return (f'{chal.name},{chal.points},{chal.availability}')
+
 @app.route('/prizes/all', methods=['GET'])
 def get_all_prizes():
     return (jsonify ( { 'Prizes' : spoof.create_prizes() } ) )
+
 
 @app.route('/challenges/current/<user_id>', methods=['GET'])
 def challenges_current(user_id):
