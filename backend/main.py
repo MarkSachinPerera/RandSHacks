@@ -4,8 +4,8 @@ from requests.api import post
 from flask import Flask, render_template, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-# small test case server with data set to see if the front end can
-# successfully recieve data and display that data
+import spoof
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -69,3 +69,6 @@ def signup():
 
 def upload():
     return ("hello world")
+
+if __name__ == '__main__':
+    app.run(debug=True)
