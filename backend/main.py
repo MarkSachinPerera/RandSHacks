@@ -10,14 +10,12 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
+CORS(app)
 # Init Database
 db = SQLAlchemy(app)
-
-from models import challenge, user, task, friends, prizes, competes
+from models import model
 db.create_all()
 
-from models.user import Users
-CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
@@ -37,7 +35,7 @@ def get_leaderboard():
 @app.route('/register/<name>,<email>,<password>', methods=['GET'])
 def post_register(name, password, email):
     try:
-        new_user = Users(name=name, password=password, email=email)
+        new_user = model.Users(name=name, password=password, email=email)
         db.session.add(new_user)
         db.session.commit()
     except exc.IntegrityError as e:
@@ -46,24 +44,34 @@ def post_register(name, password, email):
 
 
 
-# @app.route('/challenges/update/', methods=['POST'])
-# def challenges_update():
-#     new_user = Users(name='jake', password='pass', email='john')
-#     db.session.add(new_user)
-#     db.session.commit()
-#     return redirect('/')
+@app.route('/challenges/update/<user_id>,<challenge_id>,<status>', methods=['GET'])
+def challenges_update(user_id, challenge_id, status):
 
-# @app.route('/challenges/current/', methods=['GET'])
-# def challenges_current():
-#     if request.method == 'GET':
-#         try:
-#             userid = request.args.get('name')
-#         except:
-#             print ('error')
-#     return jsonify( {'User': userid})
+    if status == "start":
+        try:
+            new = model.competes(uid=user_id, cid=challenge_id)
+            db.session.add(new)
+            db.session.commit()
+            return ("success")
+        except exc.IntegrityError as e:
+            return("u entered same user twice")
+    if status == "done":
+        q = model.competes.query.filter_by(uid=user_id).first_or_404()
+        if q.cid == int( challenge_id):
+            return ("Challenge done, mark TODO delete it")
+    return ("something went wrong")
 
+# @app.route('/challenges/current/<user_id>', methods=['GET'])
+# def challenges_current(user_id):
+#     q = Users.query.filter_by(name='marky').first_or_404()
 
-    
+#     print(q.email)
+
+###################Example of get request
+@app.route('/user/<name>')
+def show_user(name):
+    user = model.Users.query.filter_by(name=name).first_or_404()
+    return user.name
 
 if __name__ == '__main__':
     app.run(debug=True)
