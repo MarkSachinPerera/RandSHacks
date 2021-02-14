@@ -26,6 +26,14 @@ def get_status_update():
 def get_leaderboard():
     return(jsonify ( {'Leaderboard' : spoof.get_leaderboard() } ))
 
+@app.route('/challenges/update/', methods=['PUT'])
+def challenges_update(user_id, challenge_id, status):
+    return( jsonify( {'message':'In progress'}))
+
+@app.route('/challenges/current/', methods=['GET'])
+def challenges_current(userId):
+    return( jsonify( {'message':'In progress'}))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
