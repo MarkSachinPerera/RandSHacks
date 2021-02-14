@@ -38,7 +38,7 @@ def challenges_current(userId):
 
 
     
-from models import challenge, user, task, friends
+from models import challenge, user, task, friends, prizes, competes
 db.create_all()
 if __name__ == '__main__':
     app.run(debug=True)
