@@ -1,4 +1,5 @@
 import functools, json, requests
+from backend.main import db
 
 from flask import blueprints, flash, redirect, render_template, request
 from flask import Blueprint, session, url_for, g
@@ -17,8 +18,8 @@ def signup():
         new_user = Users(name=user_name, password=user_password, email=user_email)
 
     try:
-        session.add(new_user)
-        session.commit()
+        db.session.add(new_user)
+        db.session.commit()
         return redirect('/')
     except:
         return "error"

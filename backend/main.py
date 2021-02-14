@@ -7,10 +7,12 @@ from datetime import datetime
 import spoof
 
 
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 # Init Database
 db = SQLAlchemy(app)
+
 
 @app.route('/')
 def upload():
@@ -35,5 +37,8 @@ def challenges_current(userId):
     return( jsonify( {'message':'In progress'}))
 
 
+    
+from models import challenge, user, task, friends
+db.create_all()
 if __name__ == '__main__':
     app.run(debug=True)
