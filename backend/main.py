@@ -60,7 +60,11 @@ def challenges_update(user_id, challenge_id, status):
 
 @app.route('/prizes/all', methods=['GET'])
 def get_all_prizes():
-    return (jsonify ( { 'Prizes' : spoof.create_prizes() } ) )
+
+    
+    prizeList = spoof.create_prizes()
+
+    return (jsonify ( { 'Prizes' :  prizeList} ) )
 
 @app.route('/challenges/current/<user_id>', methods=['GET'])
 def challenges_current(user_id):
@@ -76,24 +80,36 @@ def challenges_current(user_id):
 
     return ( jsonify( { 'Current' : data}))
 
-###################Example of get request
-@app.route('/user/<name>')
-def show_user(name):
-    user = model.Users.query.filter_by(name=name).first_or_404()
-    return user.name
+###################Full user functions ########################
+@app.route('/user/name')
+def show_user():
+    # user = model.Users.query.filter_by(name=name).first_or_404()
+    # return user.name
 
-@app.route('/user/friends/')
+    return ( jsonify ( {'Name' : spoof.get_user_name()} ) )
+
+@app.route('/user/score')
+def get_user_score():
+    # user = model.Users.query.filter_by(name=name).first_or_404()
+    # return user.name
+
+    return ( jsonify ( {'Score' : spoof.get_user_score()} ) )
+
+@app.route('/user/friends')
 def get_user_friends():
     data = {}
-    friendlist = spoof.get_leaderboard()
+    fulllist = spoof.get_leaderboard()
+    friendlist = spoof.get_user_friends()
 
-    for i in range(1,6):
+    for i in friendlist:
         data[i] = {
-            'name' : friendlist[i]['name'],
-            'imageurl' : friendlist[i]['imgurl']
+            'name' : fulllist[i]['name'],
+            'imageurl' : fulllist[i]['imgurl']
             
         }
     return( jsonify ( {'Friends' : data}))
 
+
+########################################################################
 if __name__ == '__main__':
     app.run(debug=True)

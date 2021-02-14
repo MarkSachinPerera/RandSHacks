@@ -84,6 +84,15 @@ def create_prizes():
     
     return(data)
 
+def get_user_name():
+    return("Timothy Cooper")
+
+def get_user_score():
+    return(300)
+
+def get_user_friends():
+    return ([4,6,8])
+
 if __name__ == "__main__":
     # create_people()
     print(get_leaderboard())
