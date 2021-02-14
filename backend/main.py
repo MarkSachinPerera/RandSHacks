@@ -12,16 +12,15 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 # Init Database
 db = SQLAlchemy(app)
-<<<<<<< HEAD
 
-from models import challenge, user, task, friends, prizes, competes
+from models import model
 db.create_all()
 
-from models.user import Users
-=======
+
+
+
 CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
->>>>>>> 1af97e435101bcc6555acdcd2a7460569d425ae7
 
 @app.route('/')
 def upload():
@@ -40,7 +39,7 @@ def get_leaderboard():
 @app.route('/register/<name>,<email>,<password>', methods=['GET'])
 def post_register(name, password, email):
     try:
-        new_user = Users(name=name, password=password, email=email)
+        new_user = model.Users(name=name, password=password, email=email)
         db.session.add(new_user)
         db.session.commit()
     except exc.IntegrityError as e:
@@ -49,12 +48,12 @@ def post_register(name, password, email):
 
 
 
-# @app.route('/challenges/update/', methods=['POST'])
-# def challenges_update():
-#     new_user = Users(name='jake', password='pass', email='john')
-#     db.session.add(new_user)
-#     db.session.commit()
-#     return redirect('/')
+@app.route('/challenges/update/<name>,<password>,<email>')
+def challenges_update():
+    new_user = Users(name='jake', password='pass', email='john')
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect('/')
 
 # @app.route('/challenges/current/', methods=['GET'])
 # def challenges_current():
@@ -65,8 +64,11 @@ def post_register(name, password, email):
 #             print ('error')
 #     return jsonify( {'User': userid})
 
-
-    
+###################Example of get request
+@app.route('/user/<name>')
+def show_user(name):
+    user = model.Users.query.filter_by(name=name).first_or_404()
+    return user.name
 
 if __name__ == '__main__':
     app.run(debug=True)
