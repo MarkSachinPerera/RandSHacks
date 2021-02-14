@@ -28,9 +28,27 @@ def get_status():
 
     return(status)
 
+def get_leaderboard():
+    fake = Faker()
+
+    names = []
+    points = []
+
+    for i in range(10):
+        names.append(fake.name())
+        points.append(random.randint(10,(i+1)*100) * 10)
+
+    points.sort(reverse=True)
+
     
+    data = {}
+
+    for i in range(0,10):
+        data[i+1] = { 'name' : names[i], 'score' : points[i]}
+
+    return(data)    
 
 
 if __name__ == "__main__":
     # create_people()
-    print(get_status())
+    print(get_leaderboard())

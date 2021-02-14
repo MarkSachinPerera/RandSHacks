@@ -12,20 +12,27 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # Init Database
 db = SQLAlchemy(app)
 
-
-
-
-
 @app.route('/')
 def upload():
     return ("hello world")
 
 @app.route('/status', methods=['GET'])
-def status_update():
+def get_status_update():
 
     data = spoof.get_status()
     return ( jsonify({'Status' : data}) )
 
+@app.route('/leaderboard', methods=['GET'])
+def get_leaderboard():
+    return(jsonify ( {'Leaderboard' : spoof.get_leaderboard() } ))
+
+@app.route('/challenges/update/', methods=['PUT'])
+def challenges_update(user_id, challenge_id, status):
+    return( jsonify( {'message':'In progress'}))
+
+@app.route('/challenges/current/', methods=['GET'])
+def challenges_current(userId):
+    return( jsonify( {'message':'In progress'}))
 
 
 if __name__ == '__main__':
