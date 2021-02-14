@@ -29,7 +29,7 @@ export default function ChallengeCard({ onClick, color = 'blue', header, data, i
         <Card.Meta>Points: {data}</Card.Meta>
       </Card.Content>
       <Card.Content extra>
-        <Button size="small" color={renderButtonColor()} onClick={handleButtonClick}>
+        <Button size="small" color={'blue'} onClick={handleButtonClick}>
           {buttonType}
         </Button>
       </Card.Content>
