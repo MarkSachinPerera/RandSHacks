@@ -9,6 +9,7 @@ export default class Home extends Component {
     this.state = {
       fetching: false,
       challenges: [],
+      isAuthenticated: this.props.isAuthenticated,
     };
   }
 

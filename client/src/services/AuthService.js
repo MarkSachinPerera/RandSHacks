@@ -1,12 +1,13 @@
 import LocalStorageService from './LocalStorageService';
-import { homeRoute, loginRoute } from '../constants/strings';
+import { userKey } from '../constants/strings';
+
 class AuthService {
   getUser() {
-    return LocalStorageService.get('user');
+    return LocalStorageService.get(userKey);
   }
 
   isAuthenticated() {
-    let user = LocalStorageService.get('user');
+    let user = LocalStorageService.get(userKey);
     if (user === null || user === '') return false;
     if (user.token === '') return false;
     return true;
