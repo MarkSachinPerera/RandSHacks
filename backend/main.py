@@ -10,8 +10,10 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
+CORS(app)
 # Init Database
 db = SQLAlchemy(app)
+<<<<<<< HEAD
 
 from models import model
 db.create_all()
@@ -20,6 +22,13 @@ db.create_all()
 
 
 CORS(app)
+=======
+from models import challenge, user, task, friends, prizes, competes
+db.create_all()
+from models.user import Users
+from models.competes import competes
+
+>>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
@@ -48,27 +57,49 @@ def post_register(name, password, email):
 
 
 
+<<<<<<< HEAD
 @app.route('/challenges/update/<name>,<password>,<email>')
 def challenges_update():
     new_user = Users(name='jake', password='pass', email='john')
     db.session.add(new_user)
     db.session.commit()
     return redirect('/')
+=======
+@app.route('/challenges/update/<user_id>,<challenge_id>,<status>', methods=['GET'])
+def challenges_update(user_id, challenge_id, status):
 
-# @app.route('/challenges/current/', methods=['GET'])
-# def challenges_current():
-#     if request.method == 'GET':
-#         try:
-#             userid = request.args.get('name')
-#         except:
-#             print ('error')
-#     return jsonify( {'User': userid})
+    if status == "start":
+        try:
+            new = competes(uid=user_id, cid=challenge_id)
+            db.session.add(new)
+            db.session.commit()
+            return ("success")
+        except exc.IntegrityError as e:
+            return("u entered same user twice")
+    if status == "done":
+        q = competes.query.filter_by(uid=user_id).first_or_404()
+        if q.cid == int( challenge_id):
+            return ("Challenge done, mark TODO delete it")
+    return ("something went wrong")
 
+# @app.route('/challenges/current/<user_id>', methods=['GET'])
+# def challenges_current(user_id):
+#     q = Users.query.filter_by(name='marky').first_or_404()
+>>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
+
+#     print(q.email)
+
+<<<<<<< HEAD
 ###################Example of get request
 @app.route('/user/<name>')
 def show_user(name):
     user = model.Users.query.filter_by(name=name).first_or_404()
     return user.name
+=======
+#     return("hi")
+
+    
+>>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
 
 if __name__ == '__main__':
     app.run(debug=True)
