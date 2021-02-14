@@ -13,6 +13,31 @@ export default class Leaderboard extends React.Component {
     };
   }
 
+  getUsersWithBadge = () => {
+    const users = this.state.top10Users.slice()
+
+    let sortedUsers = users.sort(function(a, b) {
+      return  b.score - a.score
+    });
+
+
+    const goldBadge = "https://img.icons8.com/officel/16/000000/gold-medal.png"
+    const silverBadge = "https://img.icons8.com/color/48/000000/olympic-medal-silver.png"
+    const bronzeBadge = "https://img.icons8.com/officexs/16/000000/olympic-medal-bronze.png"
+
+    for (let i=0; i< users.length; i++) {
+      if (i === 0)
+        sortedUsers[i].badgeColor = goldBadge
+      else if (i <= 3)
+        sortedUsers[i].badgeColor = silverBadge
+      else
+        sortedUsers[i].badgeColor = bronzeBadge
+    }
+
+    return sortedUsers
+  }
+
+
   async componentDidMount() {
     let top10Users = [];
     this.setState({ fetching: true });
@@ -21,7 +46,10 @@ export default class Leaderboard extends React.Component {
     console.log(top10Users);
     this.setState({ top10Users, fetching: false });
   }
+
   renderLeaderboard() {
+    const users = this.getUsersWithBadge()
+
     return (
       <Container textAlign="center">
         <Header as="h1">Leaderboard</Header>
@@ -33,11 +61,12 @@ export default class Leaderboard extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.state.top10Users.map((user) => {
+            {users.map((user) => {
               return (
                 <Table.Row key={user.name}>
                   <Table.Cell>
                     <Header as="h4" image>
+                      <Image src={user.badgeColor} rounded size="mini" />
                       <Image src={user.imgurl} rounded size="mini" />
                       <Header.Content>{user.name}</Header.Content>
                     </Header>
