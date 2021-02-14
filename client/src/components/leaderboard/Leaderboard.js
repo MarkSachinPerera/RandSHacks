@@ -14,29 +14,24 @@ export default class Leaderboard extends React.Component {
   }
 
   getUsersWithBadge = () => {
-    const users = this.state.top10Users.slice()
+    const users = this.state.top10Users.slice();
 
-    let sortedUsers = users.sort(function(a, b) {
-      return  b.score - a.score
+    let sortedUsers = users.sort(function (a, b) {
+      return b.score - a.score;
     });
 
+    const goldBadge = 'https://img.icons8.com/officel/16/000000/gold-medal.png';
+    const silverBadge = 'https://img.icons8.com/color/48/000000/olympic-medal-silver.png';
+    const bronzeBadge = 'https://img.icons8.com/officexs/16/000000/olympic-medal-bronze.png';
 
-    const goldBadge = "https://img.icons8.com/officel/16/000000/gold-medal.png"
-    const silverBadge = "https://img.icons8.com/color/48/000000/olympic-medal-silver.png"
-    const bronzeBadge = "https://img.icons8.com/officexs/16/000000/olympic-medal-bronze.png"
-
-    for (let i=0; i< users.length; i++) {
-      if (i === 0)
-        sortedUsers[i].badgeColor = goldBadge
-      else if (i <= 3)
-        sortedUsers[i].badgeColor = silverBadge
-      else
-        sortedUsers[i].badgeColor = bronzeBadge
+    for (let i = 0; i < users.length; i++) {
+      if (i === 0) sortedUsers[i].badgeColor = goldBadge;
+      else if (i <= 3) sortedUsers[i].badgeColor = silverBadge;
+      else sortedUsers[i].badgeColor = bronzeBadge;
     }
 
-    return sortedUsers
-  }
-
+    return sortedUsers;
+  };
 
   async componentDidMount() {
     let top10Users = [];
@@ -48,7 +43,7 @@ export default class Leaderboard extends React.Component {
   }
 
   renderLeaderboard() {
-    const users = this.getUsersWithBadge()
+    const users = this.getUsersWithBadge();
 
     return (
       <Container textAlign="center">
@@ -82,8 +77,6 @@ export default class Leaderboard extends React.Component {
   }
   render() {
     const { fetching } = this.state;
-    {
-      return fetching ? <Loader visible={fetching} /> : this.renderLeaderboard();
-    }
+    return fetching ? <Loader visible={fetching} /> : this.renderLeaderboard();
   }
 }

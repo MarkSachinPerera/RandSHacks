@@ -22,6 +22,9 @@ export default class NavBar extends Component {
       case 'Current Challenges':
         this.props.history.push(homeRoute);
         break;
+
+      default:
+        break;
     }
     this.setState({ activeItem: name });
   };
