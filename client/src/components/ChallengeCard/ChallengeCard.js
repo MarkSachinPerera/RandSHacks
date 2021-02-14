@@ -1,13 +1,13 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 
-export default function ChallengeCard({ name, secure_url, onClick, color }) {
+export default function ChallengeCard({ onClick, color }) {
   return (
     <Card onClick={onClick} color={color}>
-      <Image src={secure_url} wrapped ui={false} />
+      <Image src={'Some source'} wrapped ui={false} />
       <Card.Content>
-        <Card.Header>{name}</Card.Header>
-        <Card.Meta>Created on: {'reee'}</Card.Meta>
+        <Card.Header>{'Some data'}</Card.Header>
+        <Card.Meta>Created on: {'Some date'}</Card.Meta>
       </Card.Content>
     </Card>
   );

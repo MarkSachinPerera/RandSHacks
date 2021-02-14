@@ -12,20 +12,14 @@ export default class Home extends Component {
     };
   }
 
-  renderImages = () => {
+  renderChallenges = () => {
     return (
       <Grid stackable>
         <Grid.Row columns={6}>
-          {this.state.images.map((image) => {
-            let date = new Date(image.uploaded_on);
+          {this.state.challenges.map((challenge) => {
             return (
-              <Grid.Column key={image.public_id} style={{ marginBottom: '1em' }}>
-                <ChallengeCard
-                  name={image.name}
-                  visibility={image.visibility}
-                  secure_url={image.secure_url}
-                  onClick={() => (window.location.href = image.secure_url)}
-                />
+              <Grid.Column key={challenge.public_id} style={{ marginBottom: '1em' }}>
+                <ChallengeCard onClick={() => {}} />
               </Grid.Column>
             );
           })}
@@ -34,14 +28,12 @@ export default class Home extends Component {
     );
   };
 
-  async componentDidMount() {
-    let challenges = [];
-  }
+  async componentDidMount() {}
   render() {
     const { fetching } = this.state;
     return (
       <div style={{ margin: '1em' }}>
-        {fetching ? <Loader visible={fetching} /> : this.renderImages()}
+        {fetching ? <Loader visible={fetching} /> : this.renderChallenges()}
       </div>
     );
   }
