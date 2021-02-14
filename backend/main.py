@@ -12,16 +12,13 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 # Init Database
 db = SQLAlchemy(app)
-<<<<<<< HEAD
 
 from models import challenge, user, task, friends, prizes, competes
 db.create_all()
 
 from models.user import Users
-=======
 CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
->>>>>>> 1af97e435101bcc6555acdcd2a7460569d425ae7
 
 @app.route('/')
 def upload():
