@@ -13,22 +13,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
 CORS(app)
 # Init Database
 db = SQLAlchemy(app)
-<<<<<<< HEAD
-
-from models import model
-db.create_all()
-
-
-
-
-CORS(app)
-=======
 from models import challenge, user, task, friends, prizes, competes
 db.create_all()
 from models.user import Users
 from models.competes import competes
 
->>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
@@ -57,14 +46,6 @@ def post_register(name, password, email):
 
 
 
-<<<<<<< HEAD
-@app.route('/challenges/update/<name>,<password>,<email>')
-def challenges_update():
-    new_user = Users(name='jake', password='pass', email='john')
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect('/')
-=======
 @app.route('/challenges/update/<user_id>,<challenge_id>,<status>', methods=['GET'])
 def challenges_update(user_id, challenge_id, status):
 
@@ -85,21 +66,14 @@ def challenges_update(user_id, challenge_id, status):
 # @app.route('/challenges/current/<user_id>', methods=['GET'])
 # def challenges_current(user_id):
 #     q = Users.query.filter_by(name='marky').first_or_404()
->>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
 
 #     print(q.email)
 
-<<<<<<< HEAD
 ###################Example of get request
 @app.route('/user/<name>')
 def show_user(name):
     user = model.Users.query.filter_by(name=name).first_or_404()
     return user.name
-=======
-#     return("hi")
-
-    
->>>>>>> 0ecece096573cc7448a8d7da7cb1f91f6183978e
 
 if __name__ == '__main__':
     app.run(debug=True)
