@@ -7,6 +7,7 @@ from sqlalchemy import exc
 from datetime import datetime
 import spoof
 from flask_cors import CORS, cross_origin
+from collections.abc import Iterable 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teamate.db'
@@ -49,23 +50,36 @@ def challenges_update(user_id, challenge_id, status):
 
     if status == "start":
         try:
-            new = model.competes(uid=user_id, cid=challenge_id)
+            new = model.Competes(uid=user_id, cid=challenge_id)
             db.session.add(new)
             db.session.commit()
             return ("success")
         except exc.IntegrityError as e:
             return("u entered same user twice")
-    if status == "done":
-        q = model.competes.query.filter_by(uid=user_id).first_or_404()
-        if q.cid == int( challenge_id):
-            return ("Challenge done, mark TODO delete it")
     return ("something went wrong")
 
-# @app.route('/challenges/current/<user_id>', methods=['GET'])
-# def challenges_current(user_id):
-#     q = Users.query.filter_by(name='marky').first_or_404()
+# @app.route('/challenges/all', methods=['GET'])
+# def all_chal():
+#     q = model.Competes.query.all()
+#     print(q)
+#     return('q')
 
-#     print(q.email)
+@app.route('/challenges/current/<user_id>', methods=['GET'])
+def challenges_current(user_id):
+    q = model.Competes.query.filter_by(uid=user_id).first_or_404()
+
+    data = {}
+
+    if isinstance(q, Iterable): 
+        for i in q:
+            data[int(user_id)] = i.cid
+            print("dslfka")
+    else:
+        data = { int(q.uid) : int(q.cid)}
+        print("data")
+
+    # print(data)
+    return ( jsonify( data))
 
 ###################Example of get request
 @app.route('/user/<name>')

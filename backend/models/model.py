@@ -78,10 +78,12 @@ class Competes(db.Model):
 
     uid = db.Column(db.Integer(), primary_key=True, nullable = False)
     cid = db.Column(db.Integer(), nullable = False)
+    # status = db.Column(db.String(200), nullable = False)
 
     def __init__(self, uid, cid):
         self.uid = uid
         self.cid = cid
-    
+        # self.status = status
+
     def __repr__(self):
         return "<competes(uid='%s', cid='%s')>" % ( self.uid, self.cid)
