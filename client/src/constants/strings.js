@@ -9,7 +9,17 @@ const userKey = 'user';
 const homeRoute = '/';
 const loginRoute = '/login';
 const registerRoute = '/register';
+const leaderboardRoute = '/leaderboard';
 
 //Routes Back End
+const leaderboardSRoute = '/leaderboard';
 
-export { SERVER_BASE_URL, homeRoute, loginRoute, registerRoute, userKey };
+export {
+  SERVER_BASE_URL,
+  homeRoute,
+  loginRoute,
+  registerRoute,
+  userKey,
+  leaderboardRoute,
+  leaderboardSRoute,
+};
