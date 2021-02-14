@@ -61,6 +61,28 @@ def get_leaderboard():
 
     return(data)    
 
+def create_prizes():
+
+    word_list = [
+        "Computer",
+        "Shoes - Yeezys",
+        "Pens",
+        "Monitor",
+        "GTX 3080",
+        "Intel i9 CPU",
+        "Sony WH-1000xm"
+    ]
+
+    data = {}
+
+    for i in range(15):
+        data[i+1] = {
+            'name' : word_list[random.randint(0,6)], 
+            'points' : random.randint(10,(i+1)*100) * 10,
+            'pid' : i + 1
+        } 
+    
+    return(data)
 
 if __name__ == "__main__":
     # create_people()
