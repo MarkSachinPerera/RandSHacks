@@ -8,16 +8,16 @@ import spoof
 
 app = Flask(__name__)
 
-data = []
 
 @app.route('/')
 def upload():
     return ("hello world")
 
-@app.route('/status')
+@app.route('/status', methods=['GET'])
 def status_update():
-    status_update = spoof.get_status()
-    return(jsonify(status_update))
+
+    data = spoof.get_status()
+    return ( jsonify({'Status' : data}) )
 
 
 if __name__ == '__main__':

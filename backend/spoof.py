@@ -7,8 +7,8 @@ from faker import Faker
 def get_status():
     fake = Faker()
     names = []
-    actions = [' completed a challenge, 10 points.', ' says Hi!', ' just logged in!', ' just finished a run. 50 points.', ' joined Yoga.',
-    ' is learning pottery. 20 points.']
+    actions = [" completed a challenge, 10 points.", " says Hi!", " just logged in!", " just finished a run. 50 points.", " joined Yoga.",
+    " is learning pottery. 20 points."]
     status = []
 
     for i in range(20):
@@ -17,14 +17,20 @@ def get_status():
     for i in names:
         status.append(i + random.choice(actions))
 
-    # print(status)
-    return(random.sample(status,5))
+    data = {}
+    index = 0
+    for i in status:
+        data[index] = i
+        index = index + 1
 
 
+    # print (data)
+
+    return(status)
 
     
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # create_people()
     print(get_status())
