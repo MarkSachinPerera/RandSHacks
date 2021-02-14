@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from 'react-loader-spinner';
 import { Grid } from 'semantic-ui-react';
 
-export default function ImageRepoLoader({ visible }) {
+export default function CustomLoader({ visible }) {
   return (
     <Grid container centered>
       <Loader
