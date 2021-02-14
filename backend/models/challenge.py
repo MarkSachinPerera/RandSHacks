@@ -15,6 +15,6 @@ class challenge(db.Model):
         self.availability = availability
     
     def __repr__(self):
-        return 'Name %r' %self.name
+        return ('Name %r' %self.name)
 
     

@@ -12,4 +12,4 @@ class Users(db.Model):
         self.name = name
         self.password = password
     def __repr__(self):
-        return 'Name %r' %self.id
+        return ('Name %r' %self.id)
