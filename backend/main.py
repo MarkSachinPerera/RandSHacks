@@ -1,5 +1,5 @@
 from enum import unique
-import json, re, requests
+import json, re, requests, random
 from requests.api import post
 from flask import Flask, render_template, jsonify, redirect, request
 from flask_sqlalchemy import SQLAlchemy
@@ -81,6 +81,19 @@ def challenges_current(user_id):
 def show_user(name):
     user = model.Users.query.filter_by(name=name).first_or_404()
     return user.name
+
+@app.route('/user/friends/')
+def get_user_friends():
+    data = {}
+    friendlist = spoof.get_leaderboard()
+
+    for i in range(1,6):
+        data[i] = {
+            'name' : friendlist[i]['name'],
+            'imageurl' : friendlist[i]['imgurl']
+            
+        }
+    return( jsonify ( {'Friends' : data}))
 
 if __name__ == '__main__':
     app.run(debug=True)
