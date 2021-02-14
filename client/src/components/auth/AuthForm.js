@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Grid, Message, Segment, Header } from 'semantic-ui-react';
 import ax from '../../axios/axios';
 import LocalStorageService from '../../services/LocalStorageService';
-import { registerRoute } from '../../constants/strings';
+import { registerRoute, loginRoute, userKey } from '../../constants/strings';
 
 export default function AuthForm({ type, history }) {
   const [name, setName] = useState('');
@@ -26,17 +26,18 @@ export default function AuthForm({ type, history }) {
   };
 
   const handleOnSubmit = async () => {
-    let resp;
     if (type.toLowerCase() === 'register') {
       let body = { name, email, password };
-      resp = await ax.post('/register', body);
+      // resp = await ax.post('/register', body);
+      console.log(body);
     }
     if (type.toLowerCase() === 'login') {
       let body = { email, password };
-      resp = await ax.post('/login', body);
+      console.log(body);
+      // resp = await ax.post('/login', body);
     }
-    LocalStorageService.save('user', resp.data);
-    history.push('/images');
+    // LocalStorageService.save(userKey, resp.data);
+    history.push('/something');
   };
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -46,6 +47,29 @@ export default function AuthForm({ type, history }) {
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+
+  const renderFormMessage = () => {
+    if (type.toLowerCase() === 'register') {
+      return (
+        <Message>
+          <Message.Header>Already Registered?</Message.Header>
+          <br></br>
+          <Button fluid onClick={() => history.push(loginRoute)}>
+            Login
+          </Button>
+        </Message>
+      );
+    }
+    return (
+      <Message>
+        <Message.Header>Not yet Registered? Register</Message.Header>
+        <br></br>
+        <Button fluid onClick={() => history.push(registerRoute)}>
+          Register
+        </Button>
+      </Message>
+    );
   };
 
   return (
@@ -87,13 +111,8 @@ export default function AuthForm({ type, history }) {
             </Button>
           </Segment>
         </Form>
-        <Message>
-          <Message.Header>Not yet registered?</Message.Header>
-          <br></br>
-          <Button fluid onClick={() => history.push(registerRoute)}>
-            Register
-          </Button>
-        </Message>
+
+        {renderFormMessage()}
       </Grid.Column>
     </Grid>
   );
